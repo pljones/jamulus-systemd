@@ -1,0 +1,134 @@
+#!/bin/bash -e
+### BEGIN INIT INFO
+# Provides:          Jamulus
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Start/stop Jamulus server
+### END INIT INFO
+#
+# Jamulus			This init.d script is used to start Jamulus.
+
+JAMULUS=Jamulus
+JAMULUS_ROOT=/opt/$JAMULUS
+JAMULUS_BINDIR=$JAMULUS_ROOT/bin
+ENV="env -i LANG=C PATH=/usr/bin:/bin:$JAMULUS_BINDIR"
+
+DAEMON=$JAMULUS_BINDIR/$JAMULUS
+PIDFILE=$JAMULUS_ROOT/run/${JAMULUS}.pid
+
+# Strongly recommended not to run as root!
+JAMULUS_USER=Jamulus
+JAMULUS_PROCSCHED=
+JAMULUS_IOSCHED=
+
+JAMULUS_LOGFILE=$JAMULUS_ROOT/log/${JAMULUS}.log
+JAMULUS_PORT=54850
+JAMULUS_STATUSPAGE=$JAMULUS_ROOT/run/status.html
+#JAMULUS_SERVERNAME=$(hostname -f)
+JAMULUS_SERVERNAME=jamulus.drealm.info
+JAMULUS_HISTORY=$JAMULUS_ROOT/log/history.jpeg
+JAMULUS_SVGHISTORY=$JAMULUS_ROOT/log/history.svg
+JAMULUS_MAXCHANS=16
+JAMULUS_CENTRAL=jamulus.fischvolk.de
+JAMULUS_SERVERINFO="$JAMULUS_SERVERNAME;London;224"
+JAMULUS_WELCOMEMSG="Welcome to $JAMULUS_SERVERNAME"
+
+JAMULUS_ENABLE_RECORDING=true
+JAMULUS_RECORDING_DIR=${JAMULUS_ROOT}/run/recording
+
+if [ ${JAMULUS_ENABLE_RECORDING} ]
+then
+	JAMULUS_WELCOMEMSG="${JAMULUS_WELCOMEMSG} - (recording enabled: CC BY-NC-SA 4.0 - no cover versions!)"
+fi
+JAMULUS_WELCOMEMSG="${JAMULUS_WELCOMEMSG}
+*NOTE* Client 3.4.2 or later required here!"
+
+set -e
+if [ ! -x "$DAEMON" ] ; then
+	echo "Jamulus not installed."
+	exit 1
+fi
+
+. /lib/lsb/init-functions
+
+test -f /etc/default/rcS && . /etc/default/rcS
+test -f /etc/default/Jamulus && . /etc/default/Jamulus
+
+START_OPTS=("--background" "-m")
+if [ ! -z "$JAMULUS_USER" ] ; then START_OPTS+=("-c" "$JAMULUS_USER"); fi
+if [ ! -z "$JAMULUS_PROCSCHED" ] ; then START_OPTS+=("-P" $JAMULUS_PROCSCHED); fi
+if [ ! -z "$JAMULUS_IOSCHED" ] ; then START_OPTS+=("-I" $JAMULUS_IOSCHED); fi
+
+JAMULUS_OPTS=("-s" "-n")
+if [ ! -z "$JAMULUS_LOGFILE" ] ; then JAMULUS_OPTS+=("-l" "$JAMULUS_LOGFILE"); fi
+if [ ! -z "$JAMULUS_PORT" ] ; then JAMULUS_OPTS+=("-p" $JAMULUS_PORT); fi
+if [ ! -z "$JAMULUS_MAXCHANS" ] ; then JAMULUS_OPTS+=("-u" $JAMULUS_MAXCHANS); fi
+if [ ! -z "$JAMULUS_STATUSPAGE" ] ; then JAMULUS_OPTS+=("-m" "$JAMULUS_STATUSPAGE"); fi
+if [ ! -z "$JAMULUS_STATUSPAGE" -a -z "$JAMULUS_SERVERNAME" ] ; then
+	log_failure_msg "if STATUSPAGE set, SERVERNAME must be set"
+	exit 1
+fi
+if [ ! -z "$JAMULUS_SERVERNAME" ] ; then JAMULUS_OPTS+=("-a" "$JAMULUS_SERVERNAME"); fi
+# if [ ! -z "$JAMULUS_HISTORY" ] ; then JAMULUS_OPTS+=("-y" "$JAMULUS_HISTORY"); fi
+if [ ! -z "$JAMULUS_SVGHISTORY" ] ; then JAMULUS_OPTS+=("-y" "$JAMULUS_SVGHISTORY"); fi
+
+if [ ! -z "$JAMULUS_CENTRAL" ] ; then JAMULUS_OPTS+=("-e" "$JAMULUS_CENTRAL"); fi
+if [ ! -z "$JAMULUS_SERVERINFO" ] ; then JAMULUS_OPTS+=("-o" "$JAMULUS_SERVERINFO"); fi
+if [ ! -z "$JAMULUS_WELCOMEMSG" ] ; then JAMULUS_OPTS+=("-w" "$JAMULUS_WELCOMEMSG"); fi
+
+if [ ! -z "$JAMULUS_ENABLE_RECORDING" ] && [ $JAMULUS_ENABLE_RECORDING ] && [ ! -z "$JAMULUS_RECORDING_DIR" ]
+then
+  START_OPTS+=("--umask" "0002")
+  JAMULUS_OPTS+=("-L" "-R" "$JAMULUS_RECORDING_DIR")
+fi
+
+case $1 in
+	start)
+		log_daemon_msg "Starting Jamulus server" "Jamulus"
+		if [ ! -z "$JAMULUS_STATUSPAGE" -a -e "$JAMULUS_STATUSPAGE" ] ; then
+			cat > "$JAMULUS_STATUSPAGE" << !EOF
+$JAMULUS_SERVERNAME Jamulus server is starting.
+!EOF
+		fi
+		log_daemon_msg "start-stop-daemon --quiet --start ${START_OPTS[@]} --pidfile $PIDFILE --startas $DAEMON -- ${JAMULUS_OPTS[@]}"
+		start-stop-daemon --quiet --start "${START_OPTS[@]}" --pidfile $PIDFILE --startas $DAEMON -- "${JAMULUS_OPTS[@]}"
+	;;
+	stop)
+		log_daemon_msg "Stopping Jamulus server" "Jamulus"
+		STOP_OPTS=()
+		if [ ! -z "$JAMULUS_USER" ] ; then STOP_OPTS+=("-c" "$JAMULUS_USER"); fi
+		log_daemon_msg "--quiet --stop --oknodo --pidfile $PIDFILE --exec $DAEMON ${STOP_OPTS[@]}"
+		start-stop-daemon --quiet --stop --oknodo --pidfile $PIDFILE --exec $DAEMON "${STOP_OPTS[@]}"
+		rm -f $PIDFILE
+		if [ ! -z "$JAMULUS_STATUSPAGE" -a -e "$JAMULUS_STATUSPAGE" ] ; then
+			cat > "$JAMULUS_STATUSPAGE" << !EOF
+$JAMULUS_SERVERNAME Jamulus server is not running.
+!EOF
+		fi
+	;;
+	graceful | reload | force-reload | restart)
+		$0 stop && $0 start
+	;;
+	status)
+		if [ -e "$PIDFILE" ] ; then
+			if [ -e /proc/$(cat "$PIDFILE") ]; then
+				if [ ! -z "$JAMULUS_STATUSPAGE" -a -e "$JAMULUS_STATUSPAGE" ] ; then
+					grep -v ul "$JAMULUS_STATUSPAGE" | sed -e 's!</\?li>!!g'
+				else
+					ps lwwp $(cat $PIDFILE)
+				fi
+			else
+				log_success_msg "$DAEMON is not running."
+			fi
+		else
+			log_success_msg "$DAEMON is not running."
+		fi
+	;;
+	*)
+		log_success_msg "Usage: $0 {start|stop|restart|status}"
+		exit 1
+	;;
+esac
