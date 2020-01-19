@@ -1,5 +1,6 @@
 #!/bin/bash -e
 RECORDING_DIR=/opt/Jamulus/run/recording
+RECORDING_HOST_DIR=drealm.info:html/jamulus/
 
 cd "${RECORDING_DIR}"
 
@@ -78,7 +79,7 @@ do
 		zip -r "${jamDir}.zip" "${jamDir}" -i '*.opus' '*.rpp' && {
 			rm -r "${jamDir}"
 			i=10
-			while [[ $i -gt 0 ]] && ! scp -o ConnectionAttempts=6 "${jamDir}.zip" drealm.info:html/jamulus/
+			while [[ $i -gt 0 ]] && ! scp -o ConnectionAttempts=6 "${jamDir}.zip" ${RECORDING_HOST_DIR}
 			do
 				(( i-- ))
 				sleep $(( 11 - i ))
