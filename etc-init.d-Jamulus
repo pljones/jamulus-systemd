@@ -58,7 +58,11 @@ test -f /etc/default/rcS && . /etc/default/rcS
 test -f /etc/default/Jamulus && . /etc/default/Jamulus
 
 START_OPTS=("--background" "-m")
-if [ ! -z "$JAMULUS_USER" ] ; then START_OPTS+=("-c" "$JAMULUS_USER"); fi
+STOP_OPTS=()
+if [ ! -z "$JAMULUS_USER" ] ; then
+	START_OPTS+=("-c" "$JAMULUS_USER")
+	STOP_OPTS+=("-c" "$JAMULUS_USER")
+fi
 if [ ! -z "$JAMULUS_PROCSCHED" ] ; then START_OPTS+=("-P" $JAMULUS_PROCSCHED); fi
 if [ ! -z "$JAMULUS_IOSCHED" ] ; then START_OPTS+=("-I" $JAMULUS_IOSCHED); fi
 
@@ -98,10 +102,8 @@ $JAMULUS_SERVERNAME Jamulus server is starting.
 	;;
 	stop)
 		log_daemon_msg "Stopping Jamulus server" "Jamulus"
-		STOP_OPTS=()
-		if [ ! -z "$JAMULUS_USER" ] ; then STOP_OPTS+=("-c" "$JAMULUS_USER"); fi
-		log_daemon_msg "--quiet --stop --oknodo --pidfile $PIDFILE --exec $DAEMON ${STOP_OPTS[@]}"
-		start-stop-daemon --quiet --stop --oknodo --pidfile $PIDFILE --exec $DAEMON "${STOP_OPTS[@]}"
+		log_daemon_msg "--quiet --stop ${STOP_OPTS[@]} --oknodo --pidfile $PIDFILE --exec $DAEMON"
+		start-stop-daemon --quiet --stop "${STOP_OPTS[@]}" --oknodo --pidfile $PIDFILE --exec $DAEMON
 		rm -f $PIDFILE
 		if [ ! -z "$JAMULUS_STATUSPAGE" -a -e "$JAMULUS_STATUSPAGE" ] ; then
 			cat > "$JAMULUS_STATUSPAGE" << !EOF
