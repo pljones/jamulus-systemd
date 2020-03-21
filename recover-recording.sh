@@ -57,6 +57,25 @@ iid=0
 prevIP=''
 for x in $(ls -1 *.wav | sort -t- -k2)
 do
+
+	# Some initial cleaning up
+	if [[ -z "$x" ]]
+	then
+		rm "$x"
+		continue
+	fi
+	# If ffmpeg/ffprobe and sox cannot cope then give up
+	if ! ffprobe -v error -i "$x" >/dev/null 2>&1
+	then
+		if sox --ignore-length "$x" "FIXED-$x" >/dev/null 2>&1
+		then
+			mv "FIXED-$x" "$x"
+		else
+			rm -f "$x" "FIXED-$x"
+			continue
+		fi
+	fi
+
 	IP=${x#*-}
 	IP=${IP%%-*}
 	if [[ "$prevIP" != "$IP" ]]
