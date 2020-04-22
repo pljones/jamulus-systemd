@@ -44,8 +44,10 @@ fi
 
 projectNamespace=$(uuidgen -n $siteNamespace -N "${projectName}" --sha1)
 projectDate=$( p=${projectName#Jam-}; echo ${p:0:4}-${p:4:2}-${p:6:2} ${p:9:2}:${p:11:2}:${p:13:2}.${p:15} )
+frameRate=$([[ ${JAMULUS_OPTS[@]} =~ " -F" ]] && echo 64 || echo 128)
+
 secondsAt48K () {
-	echo $1 | awk '{ printf "%.14f\n", $1 * 128 / 48000; }'
+	echo $1 | awk '{ printf "%.14f\n", $1 / 48000; }'
 }
 
 echo '<REAPER_PROJECT 0.1 "5.0"' $(date -d "$projectDate" -u '+%s')
@@ -98,11 +100,10 @@ do
 	echo '  <ITEM'
 	echo '   FADEIN 0 0 0 0 0 0'
 	echo '   FADEOUT 0 0 0 0 0 0'
-	filePos=${x#*-*-}
-	filePos=${filePos%-*.wav}
-	echo '   POSITION '$(secondsAt48K $filePos)
-	fileSize=$(stat -c '%s' "$x")
-	echo '   LENGTH '$(secondsAt48K $(( $fileSize / 64 )) )
+	filePos="${x#*-*-}"
+	filePos="${filePos%-*.wav}"
+	echo '   POSITION '$(secondsAt48K $(( $filePos * $frameRate )) )
+	echo '   LENGTH '$(secondsAt48K $(soxi -s "$x"))
 	echo '   IGUID {'$(uuidgen -n $projectNamespace -N $IP --sha1)'}'
 	echo '   IID '$iid
 	echo '   NAME '$IP' ('$iidt')'
