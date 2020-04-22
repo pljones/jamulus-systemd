@@ -103,6 +103,7 @@ do
 	echo '   POSITION '$(secondsAt48K $filePos)
 	fileSize=$(stat -c '%s' "$x")
 	echo '   LENGTH '$(secondsAt48K $(( $fileSize / 64 )) )
+	echo '   IGUID {'$(uuidgen -n $projectNamespace -N $IP --sha1)'}'
 	echo '   IID '$iid
 	echo '   NAME '$IP' ('$iidt')'
 	echo '   GUID {'$(uuidgen -n $projectNamespace -N "$IP-$iidt" --sha1)'}'
