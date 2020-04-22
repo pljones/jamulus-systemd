@@ -28,7 +28,7 @@ test -f "${INIT_SCRIPT}" || { echo 'Jamulus init script not found.'; exit 1; }
 . <(grep -v 'exit 1' "${INIT_SCRIPT}") >/dev/null 2>&1
 
 siteNamespace=$(uuidgen -n @url -N jamulus:${JAMULUS_SERVERNAME} --sha1)
-projectName="$(basename $(pwd))"
+projectName=$(basename "$(pwd)")
 
 if [[ "${projectName:0:4}" != "Jam-" ]]
 then
