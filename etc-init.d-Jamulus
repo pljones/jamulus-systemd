@@ -22,7 +22,7 @@ PIDFILE=$JAMULUS_ROOT/run/${JAMULUS}.pid
 # Strongly recommended not to run as root!
 JAMULUS_USER=Jamulus
 JAMULUS_PROCSCHED=
-JAMULUS_IOSCHED=
+JAMULUS_IOSCHED=real-time
 
 JAMULUS_FASTUPDATE=true
 JAMULUS_PORT=54850
@@ -37,14 +37,13 @@ JAMULUS_RECORDING_DIR=${JAMULUS_ROOT}/run/recording
 #JAMULUS_SERVERNAME=$(hostname -f)
 JAMULUS_SERVERNAME=jamulus.drealm.info
 JAMULUS_SERVERINFO="$JAMULUS_SERVERNAME;London;224"
-JAMULUS_WELCOMEMSG="Welcome to $JAMULUS_SERVERNAME"
+JAMULUS_WELCOMEMSG="<h3>Welcome to <a href="http://jamulus.drealm.info/">$JAMULUS_SERVERNAME</a></h3>"
 
 if [ ${JAMULUS_ENABLE_RECORDING} ]
 then
-	JAMULUS_WELCOMEMSG="${JAMULUS_WELCOMEMSG} - (recording enabled: CC BY-NC-SA 4.0 - no cover versions!)"
+	JAMULUS_WELCOMEMSG="${JAMULUS_WELCOMEMSG}<p><strong>Recording enabled:</strong> CC BY-NC-SA 4.0 applies: no cover versions!</p>"
 fi
-JAMULUS_WELCOMEMSG="${JAMULUS_WELCOMEMSG}
-*NOTE* Client 3.4.2 or later required here!"
+JAMULUS_WELCOMEMSG="${JAMULUS_WELCOMEMSG%</p>}<br/><small>NOTE: Client 3.4.2 or later required here!</small></p>"
 
 set -e
 if [ ! -x "$DAEMON" ] ; then
