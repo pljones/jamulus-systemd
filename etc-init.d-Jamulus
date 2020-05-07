@@ -37,7 +37,7 @@ JAMULUS_RECORDING_DIR=${JAMULUS_ROOT}/run/recording
 #JAMULUS_SERVERNAME=$(hostname -f)
 JAMULUS_SERVERNAME=jamulus.drealm.info
 JAMULUS_SERVERINFO="$JAMULUS_SERVERNAME;London;224"
-JAMULUS_WELCOMEMSG="<h3>Welcome to <a href="http://jamulus.drealm.info/">$JAMULUS_SERVERNAME</a></h3>"
+JAMULUS_WELCOMEMSG="<h3>Welcome to 'http://${JAMULUS_SERVERNAME}/'</h3>"
 
 if [ ${JAMULUS_ENABLE_RECORDING} ]
 then
