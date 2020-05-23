@@ -19,7 +19,6 @@ JAMULUS_WELCOMEMSG=
 # Overrides for the above
 . "$JAMULUS_ROOT/systemd/$1.env"
 
-set -e
 export LANG=C PATH="/usr/bin:/bin:$JAMULUS_BINDIR"
 DAEMON="$JAMULUS_BINDIR/${JAMULUS}-$1"
 if [ ! -x "$DAEMON" ] ; then
