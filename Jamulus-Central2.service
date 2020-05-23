@@ -7,7 +7,7 @@ Documentation=https://github.com/corrados/jamulus/wiki/Server-Troubleshooting
 WantedBy=multi-user.target
 
 [Service]
-ExecStart=/opt/Jamulus/bin/run-Jamulus.sh Jazz
+ExecStart=/opt/Jamulus/bin/run-Jamulus.sh Central2
 User=Jamulus
 Group=Jamulus
 Nice=-20
@@ -15,4 +15,4 @@ IOSchedulingClass=realtime
 IOSchedulingPriority=3
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=Jamulus-Jazz
+SyslogIdentifier=Jamulus-Central2
