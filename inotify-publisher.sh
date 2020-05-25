@@ -3,9 +3,10 @@
 MOST_RECENT=0
 
 # Get the variables
-INIT_SCRIPT=$(realpath /etc/init.d/Jamulus)
-test -f "${INIT_SCRIPT}" || { echo 'Jamulus init script not found.'; exit 1; }
-. <(grep -v 'exit 1' "${INIT_SCRIPT}") >/dev/null 2>&1
+JAMULUS=Jamulus
+JAMULUS_ROOT=/opt/$JAMULUS
+JAMULUS_BINDIR=$JAMULUS_ROOT/bin
+. /opt/Jamulus/systemd/server.env
 
 # Canonicalise the variables we need
 JAMULUS_RECORDING_DIR=$(realpath "${JAMULUS_RECORDING_DIR}")
