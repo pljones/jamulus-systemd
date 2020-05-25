@@ -42,5 +42,5 @@ wait_for_quiet () {
 while wait_for_new_jamdir && wait_for_quiet
 do
 	MOST_RECENT=$(date -r "${JAMULUS_RECORDING_DIR}" "+%s")
-	"${PUBLISH_SCRIPT}"
+	"${PUBLISH_SCRIPT}" || true
 done
