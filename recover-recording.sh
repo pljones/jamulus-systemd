@@ -23,9 +23,10 @@ HELPMSG
 fi
 
 # Get the variables
-INIT_SCRIPT=$(realpath /etc/init.d/Jamulus)
-test -f "${INIT_SCRIPT}" || { echo 'Jamulus init script not found.'; exit 1; }
-. <(grep -v 'exit 1' "${INIT_SCRIPT}") >/dev/null 2>&1
+JAMULUS=Jamulus
+JAMULUS_ROOT=/opt/$JAMULUS
+JAMULUS_BINDIR=$JAMULUS_ROOT/bin
+. /opt/Jamulus/systemd/server.env
 
 siteNamespace=$(uuidgen -n @url -N jamulus:${JAMULUS_SERVERNAME} --sha1)
 projectName=$(basename "$(pwd)")
