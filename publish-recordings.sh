@@ -64,10 +64,13 @@ do
 			sed -e 's/\.wav/.opus/' -e 's/WAVE/OPUS/' \
 				"${rppFile}" > "${rppFile}.tmp" && \
 				mv "${rppFile}.tmp" "${rppFile}"
+			# Note, Audacity won't like the OPUS files...
 		else
 			# As no items were left, remove the project
 			echo "Removed ${rppFile}"
 			rm "${rppFile}"
+			echo "Removed ${rppFile/rpp/lof}"
+			rm "${rppFile/rpp/lof}"
 		fi
 
 	)
