@@ -16,4 +16,5 @@ IOSchedulingPriority=3
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=Jamulus-server
-KillSignal=SIGKILL
+KillSignal=SIGUSR2
+TimeoutStopSec=2
