@@ -2,12 +2,15 @@
 Description=Jamulus Jazz Server List
 Documentation=http://jamulus.drealm.info/jamulus
 Documentation=https://github.com/corrados/jamulus/wiki/Server-Troubleshooting
+After=network-online.target
+Wants=network-online.target
 
 [Install]
 WantedBy=multi-user.target
 
 [Service]
 ExecStart=/opt/Jamulus/bin/run-Jamulus.sh Central2
+WorkingDirectory=~
 User=Jamulus
 Group=Jamulus
 CPUSchedulingPolicy=rr
