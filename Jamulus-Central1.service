@@ -13,6 +13,7 @@ ExecStart=/opt/Jamulus/bin/run-Jamulus.sh Central1
 WorkingDirectory=~
 User=Jamulus
 Group=Jamulus
+ControlGroup=cpu:/
 CPUSchedulingPolicy=rr
 CPUSchedulingPriority=10
 IOSchedulingClass=realtime
