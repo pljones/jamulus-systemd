@@ -1,5 +1,5 @@
 [Unit]
-Description=Jamulus Jazz Server List
+Description=Central Server List (22524)
 Documentation=http://jamulus.drealm.info/jamulus
 Documentation=https://github.com/corrados/jamulus/wiki/Server-Troubleshooting
 After=network-online.target
