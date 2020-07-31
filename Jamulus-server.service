@@ -10,7 +10,7 @@ WantedBy=multi-user.target
 
 [Service]
 CPUSchedulingPolicy=rr
-CPUSchedulingPriority=100
+CPUSchedulingPriority=99
 IOSchedulingClass=realtime
 IOSchedulingPriority=3
 SyslogIdentifier=Jamulus-server
