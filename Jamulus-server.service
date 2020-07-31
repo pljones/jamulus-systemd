@@ -9,7 +9,6 @@ Wants=network-online.target
 WantedBy=multi-user.target
 
 [Service]
-ControlGroup=cpu:/
 CPUSchedulingPolicy=rr
 CPUSchedulingPriority=100
 IOSchedulingClass=realtime
