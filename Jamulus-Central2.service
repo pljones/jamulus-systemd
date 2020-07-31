@@ -9,15 +9,15 @@ Wants=network-online.target
 WantedBy=multi-user.target
 
 [Service]
-ExecStart=/opt/Jamulus/bin/run-Jamulus.sh Central2
-WorkingDirectory=~
-User=Jamulus
-Group=Jamulus
 ControlGroup=cpu:/
 CPUSchedulingPolicy=rr
 CPUSchedulingPriority=10
 IOSchedulingClass=realtime
 IOSchedulingPriority=3
+SyslogIdentifier=Jamulus-Central2
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=Jamulus-Central2
+User=Jamulus
+Group=Jamulus
+WorkingDirectory=~
+ExecStart=/opt/Jamulus/bin/run-Jamulus.sh Central2
