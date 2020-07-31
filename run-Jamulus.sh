@@ -27,7 +27,7 @@ if [ ! -x "$DAEMON" ] ; then
 fi
 
 JAMULUS_OPTS=("-s" "-n")
-if [ ! -z "$JAMULUS_FASTUPDATE" ] && [ $JAMULUS_FASTUPDATE ]; then JAMULUS_OPTS+=("-F"); fi
+if [ ! -z "$JAMULUS_FASTUPDATE" ] && $JAMULUS_FASTUPDATE; then JAMULUS_OPTS+=("-F"); fi
 
 if [ ! -z "$JAMULUS_PORT" ] ; then JAMULUS_OPTS+=("-p" $JAMULUS_PORT); fi
 if [ ! -z "$JAMULUS_MAXCHANS" ] ; then JAMULUS_OPTS+=("-u" $JAMULUS_MAXCHANS); fi
@@ -41,7 +41,7 @@ if [ ! -z "$JAMULUS_STATUSPAGE" ] ; then JAMULUS_OPTS+=("-m" "$JAMULUS_STATUSPAG
 if [ ! -z "$JAMULUS_LOGFILE" ] ; then JAMULUS_OPTS+=("-l" "$JAMULUS_LOGFILE"); fi
 if [ ! -z "$JAMULUS_SVGHISTORY" ] ; then JAMULUS_OPTS+=("-y" "$JAMULUS_SVGHISTORY"); fi
 
-if [ ! -z "$JAMULUS_ENABLE_RECORDING" ] && [ $JAMULUS_ENABLE_RECORDING ] && [ ! -z "$JAMULUS_RECORDING_DIR" ]
+if [ ! -z "$JAMULUS_ENABLE_RECORDING" ] && $JAMULUS_ENABLE_RECORDING && [ ! -z "$JAMULUS_RECORDING_DIR" ]
 then
 	JAMULUS_OPTS+=("-L" "-R" "$JAMULUS_RECORDING_DIR")
 fi
