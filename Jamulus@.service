@@ -1,5 +1,5 @@
 [Unit]
-Description=Central Server List (22524)
+Description=Jamulus Server %i
 Documentation=http://jamulus.drealm.info/jamulus
 Documentation=https://github.com/corrados/jamulus/wiki/Server-Troubleshooting
 After=network-online.target
@@ -13,10 +13,13 @@ CPUSchedulingPolicy=rr
 CPUSchedulingPriority=20
 IOSchedulingClass=realtime
 IOSchedulingPriority=3
-SyslogIdentifier=Jamulus-Central2
+SyslogIdentifier=Jamulus-%i
 StandardOutput=syslog
 StandardError=syslog
 User=Jamulus
 Group=Jamulus
 WorkingDirectory=~
-ExecStart=/opt/Jamulus/bin/run-Jamulus.sh Central2
+Environment=UNIT=%i
+EnvironmentFile=/opt/Jamulus/systemd/Jamulus.env
+EnvironmentFile=/opt/Jamulus/systemd/%i.env
+ExecStart=/opt/Jamulus/bin/run-Jamulus-template.sh
