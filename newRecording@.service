@@ -1,0 +1,7 @@
+[Unit]
+Description=Start a new recording on Jamulus-%i
+Requisite=Jamulus@%i
+
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl kill -s SIGUSR1 Jamulus@%i
