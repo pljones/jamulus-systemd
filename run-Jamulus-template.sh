@@ -20,7 +20,6 @@ if [ ! -z "$JAMULUS_STATUSPAGE" -a -z "$JAMULUS_SERVERNAME" ] ; then
 fi
 if [ ! -z "$JAMULUS_STATUSPAGE" ] ; then JAMULUS_OPTS+=("-m" "$JAMULUS_STATUSPAGE"); fi
 if [ ! -z "$JAMULUS_LOGFILE" ] ; then JAMULUS_OPTS+=("-l" "$JAMULUS_LOGFILE"); fi
-if [ ! -z "$JAMULUS_SVGHISTORY" ] ; then JAMULUS_OPTS+=("-y" "$JAMULUS_SVGHISTORY"); fi
 
 if [ ! -z "$JAMULUS_ENABLE_RECORDING" ] && $JAMULUS_ENABLE_RECORDING && [ ! -z "$JAMULUS_RECORDING_DIR" ]
 then
