@@ -9,7 +9,7 @@ Wants=network-online.target
 WantedBy=multi-user.target
 
 [Service]
-CPUSchedulingPolicy=rr
+CPUSchedulingPolicy=fifo
 CPUSchedulingPriority=20
 IOSchedulingClass=realtime
 IOSchedulingPriority=3
