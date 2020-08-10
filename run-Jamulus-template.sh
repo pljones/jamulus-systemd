@@ -37,4 +37,6 @@ if [ ! -z "$JAMULUS_STATUSPAGE" -a -e "$JAMULUS_STATUSPAGE" ] ; then
 $JAMULUS_SERVERNAME Jamulus server is starting.
 !EOF
 fi
+
+echo exec ${DAEMON} "${JAMULUS_OPTS[@]}"
 exec ${DAEMON} "${JAMULUS_OPTS[@]}"
