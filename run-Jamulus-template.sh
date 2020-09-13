@@ -9,6 +9,7 @@ fi
 JAMULUS_OPTS=("-s" "-n")
 if [ ! -z "$JAMULUS_FASTUPDATE" ] && $JAMULUS_FASTUPDATE; then JAMULUS_OPTS+=("-F"); fi
 if [ ! -z "$JAMULUS_PINGSERVERS" ] && $JAMULUS_PINGSERVERS; then JAMULUS_OPTS+=("-g"); fi
+if [ ! -z "$JAMULUS_MULTITHREADED" ] && $JAMULUS_MULTITHREADED; then JAMULUS_OPTS+=("-T"); fi
 
 if [ ! -z "$JAMULUS_PORT" ] ; then JAMULUS_OPTS+=("-p" $JAMULUS_PORT); fi
 if [ ! -z "$JAMULUS_MAXCHANS" ] ; then JAMULUS_OPTS+=("-u" $JAMULUS_MAXCHANS); fi
