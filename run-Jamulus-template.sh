@@ -27,7 +27,6 @@ then
 	JAMULUS_OPTS+=("-L" "-R" "$JAMULUS_RECORDING_DIR")
 fi
 
-if [ ! -z "$JAMULUS_SERVERNAME" ] ; then JAMULUS_OPTS+=("-a" "$JAMULUS_SERVERNAME"); fi
 if [ ! -z "$JAMULUS_SERVERINFO" ] ; then JAMULUS_OPTS+=("-o" "$JAMULUS_SERVERINFO"); fi
 if [ ! -z "$JAMULUS_WELCOMEMSG" ] ; then JAMULUS_OPTS+=("-w" "$JAMULUS_WELCOMEMSG"); fi
 
