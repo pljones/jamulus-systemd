@@ -14,11 +14,12 @@ JAMULUS_STATUSPAGE=$(realpath "${JAMULUS_STATUSPAGE}")
 PUBLISH_SCRIPT=$(realpath "${JAMULUS_BINDIR}/publish-recordings.sh")
 
 # Do not return until a new jamdir exists in the recording dir
+# or a day has passed (in case we miss something)
 wait_for_new_jamdir () {
 	while [[ ${MOST_RECENT} -ge $(date -r "${JAMULUS_RECORDING_DIR}" "+%s")
 		|| -z $(find "${JAMULUS_RECORDING_DIR}" -mindepth 1 -type d -prune) ]]
 	do
-		inotifywait -q -e create -e close_write "${JAMULUS_RECORDING_DIR}"
+		inotifywait -q -t $(( 24 * 60 * 60 )) -e create -e close_write "${JAMULUS_RECORDING_DIR}"
 	done
 	true
 }
