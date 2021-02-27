@@ -1,7 +1,7 @@
 [Unit]
 Description=Jamulus Server %i
 Documentation=http://jamulus.drealm.info/jamulus
-Documentation=https://github.com/corrados/jamulus/wiki/Server-Troubleshooting
+Documentation=https://jamulus.io/wiki/Server-Troubleshooting
 After=network-online.target
 Wants=network-online.target
 

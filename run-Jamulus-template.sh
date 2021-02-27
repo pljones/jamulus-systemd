@@ -8,12 +8,13 @@ fi
 
 JAMULUS_OPTS=("-s" "-n")
 if [ ! -z "$JAMULUS_FASTUPDATE" ] && $JAMULUS_FASTUPDATE; then JAMULUS_OPTS+=("-F"); fi
-if [ ! -z "$JAMULUS_PINGSERVERS" ] && $JAMULUS_PINGSERVERS; then JAMULUS_OPTS+=("-g"); fi
 if [ ! -z "$JAMULUS_MULTITHREADED" ] && $JAMULUS_MULTITHREADED; then JAMULUS_OPTS+=("-T"); fi
-
-if [ ! -z "$JAMULUS_PORT" ] ; then JAMULUS_OPTS+=("-p" $JAMULUS_PORT); fi
 if [ ! -z "$JAMULUS_MAXCHANS" ] ; then JAMULUS_OPTS+=("-u" $JAMULUS_MAXCHANS); fi
+
+if [ ! -z "$JAMULUS_PUBLICIP" ] ; then JAMULUS_OPTS+=("--serverpublicip" "$JAMULUS_PUBLICIP"); fi
+if [ ! -z "$JAMULUS_PORT" ] ; then JAMULUS_OPTS+=("-p" $JAMULUS_PORT); fi
 if [ ! -z "$JAMULUS_CENTRAL" ] ; then JAMULUS_OPTS+=("-e" "$JAMULUS_CENTRAL"); fi
+if [ ! -z "$JAMULUS_FILTER" ] ; then JAMULUS_OPTS+=("-f" "$JAMULUS_FILTER"); fi
 
 if [ ! -z "$JAMULUS_STATUSPAGE" -a -z "$JAMULUS_SERVERNAME" ] ; then
 	echo "if STATUSPAGE set, SERVERNAME must be set" >&2
@@ -30,7 +31,7 @@ fi
 if [ ! -z "$JAMULUS_SERVERINFO" ] ; then JAMULUS_OPTS+=("-o" "$JAMULUS_SERVERINFO"); fi
 if [ ! -z "$JAMULUS_WELCOMEMSG" ] ; then JAMULUS_OPTS+=("-w" "$JAMULUS_WELCOMEMSG"); fi
 
-echo "Starting Jamulus server" "$JAMULUS_SERVERNAME"
+echo "Starting Jamulus server" ;#"$JAMULUS_SERVERNAME"
 if [ ! -z "$JAMULUS_STATUSPAGE" -a -e "$JAMULUS_STATUSPAGE" ] ; then
 	cat > "$JAMULUS_STATUSPAGE" << !EOF
 $JAMULUS_SERVERNAME Jamulus server is starting.
