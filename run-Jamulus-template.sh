@@ -34,6 +34,8 @@ if [ ! -z "$JAMULUS_MULTITHREADED" ] && $JAMULUS_MULTITHREADED; then JAMULUS_OPT
 if [ ! -z "$JAMULUS_MAXCHANS" ] ; then JAMULUS_OPTS+=("-u" $JAMULUS_MAXCHANS); fi
 if [ ! -z "$JAMULUS_WELCOMEMSG" ] ; then JAMULUS_OPTS+=("-w" "$JAMULUS_WELCOMEMSG"); fi
 
+if [ ! -z "$JAMULUS_IPV6" ] && $JAMULUS_IPV6; then JAMULUS_OPTS+=("-6"); fi
+
 if [ ! -z "$JAMULUS_PUBLICIP" ] ; then JAMULUS_OPTS+=("--serverpublicip" "$JAMULUS_PUBLICIP"); fi
 
 echo "Starting Jamulus server" ;#"$JAMULUS_SERVERNAME"
