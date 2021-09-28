@@ -10,7 +10,7 @@ JAMULUS_OPTS=("-n" "-s")
 if [ ! -z "$JAMULUS_PORT" ] ; then JAMULUS_OPTS+=("-p" $JAMULUS_PORT); fi
 if [ ! -z "$JAMULUS_QOS" ] ; then JAMULUS_OPTS+=("-Q" $JAMULUS_QOS); fi
 if [ ! -z "$JAMULUS_DISCONNECT" ] && $JAMULUS_DISCONNECT; then JAMULUS_OPTS+=("-d"); fi
-if [ ! -z "$JAMULUS_CENTRAL" ] ; then JAMULUS_OPTS+=("-e" "$JAMULUS_CENTRAL"); fi
+if [ ! -z "$JAMULUS_DIRECTORY" ] ; then JAMULUS_OPTS+=("-e" "$JAMULUS_DIRECTORY"); fi
 if [ ! -z "$JAMULUS_DIRECTORYFILE" ] ; then JAMULUS_OPTS+=("--directoryfile" "$JAMULUS_DIRECTORYFILE"); fi
 if [ ! -z "$JAMULUS_FILTER" ] ; then JAMULUS_OPTS+=("-f" "$JAMULUS_FILTER"); fi
 if [ ! -z "$JAMULUS_FASTUPDATE" ] && $JAMULUS_FASTUPDATE; then JAMULUS_OPTS+=("-F"); fi
@@ -27,7 +27,8 @@ if [ ! -z "$JAMULUS_DELAYPAN" ] && $JAMULUS_DELAYPAN; then JAMULUS_OPTS+=("-P");
 
 if [ ! -z "$JAMULUS_ENABLE_RECORDING" ] && $JAMULUS_ENABLE_RECORDING && [ ! -z "$JAMULUS_RECORDING_DIR" ]
 then
-	JAMULUS_OPTS+=("-L" "-R" "$JAMULUS_RECORDING_DIR")
+	JAMULUS_OPTS+=("-R" "$JAMULUS_RECORDING_DIR")
+	if [ ! -z "$JAMULUS_WELCOMEMSG" ] ; then JAMULUS_OPTS+=("-L"); fi
 fi
 
 if [ ! -z "$JAMULUS_MULTITHREADED" ] && $JAMULUS_MULTITHREADED; then JAMULUS_OPTS+=("-T"); fi
