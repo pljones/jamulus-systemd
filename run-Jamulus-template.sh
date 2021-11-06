@@ -38,6 +38,7 @@ if [ ! -z "$JAMULUS_WELCOMEMSG" ] ; then JAMULUS_OPTS+=("-w" "$JAMULUS_WELCOMEMS
 if [ ! -z "$JAMULUS_IPV6" ] && $JAMULUS_IPV6; then JAMULUS_OPTS+=("-6"); fi
 
 if [ ! -z "$JAMULUS_PUBLICIP" ] ; then JAMULUS_OPTS+=("--serverpublicip" "$JAMULUS_PUBLICIP"); fi
+if [ ! -z "$JAMULUS_BINDIP" ] ; then JAMULUS_OPTS+=("--serverbindip" "$JAMULUS_BINDIP"); fi
 
 echo "Starting Jamulus server" ;#"$JAMULUS_SERVERNAME"
 if [ ! -z "$JAMULUS_STATUSPAGE" -a -e "$JAMULUS_STATUSPAGE" ] ; then
