@@ -1,0 +1,10 @@
+[Unit]
+Description=Prepare system for real-time audio
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/cpupower frequency-set -g performance
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
