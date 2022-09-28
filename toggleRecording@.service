@@ -1,6 +1,6 @@
 [Unit]
 Description=Toggle recording state on Jamulus-%i
-Requisite=Jamulus@%i
+Requisite=Jamulus@%i.service
 
 [Service]
 Type=oneshot
