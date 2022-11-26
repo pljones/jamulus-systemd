@@ -2,7 +2,8 @@
 Description=Jamulus Server %i
 Documentation=http://jamulus.drealm.info/jamulus
 Documentation=https://jamulus.io/wiki/Server-Troubleshooting
-After=network-online.target
+After=local-fs.target remote-fs.target swap.target
+Before=network-online.target
 Wants=network-online.target
 
 [Install]
