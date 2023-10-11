@@ -37,7 +37,8 @@ if [ ! -z "$JAMULUS_DIRECTORYFILE" ] ; then JAMULUS_OPTS+=("--directoryfile" "$J
 if [ ! -z "$JAMULUS_ENABLE_RECORDING" ] && $JAMULUS_ENABLE_RECORDING && [ ! -z "$JAMULUS_RECORDING_DIR" ]
 then
 	JAMULUS_OPTS+=("-R" "$JAMULUS_RECORDING_DIR")
-	if [ ! -z "$JAMULUS_WELCOMEMSG" ] ; then JAMULUS_OPTS+=("-L"); fi
+	if [ ! -z "$JAMULUS_RECORDING_OFF" ] && $JAMULUS_RECORDING_OFF ; then JAMULUS_OPTS+=("--norecord"); fi
+	if [ ! -z "$JAMULUS_ACCEPT_LICENCE" ] && $JAMULUS_ACCEPT_LICENCE ; then JAMULUS_OPTS+=("-L"); fi
 fi
 
 if [ ! -z "$JAMULUS_STATUSPAGE" -a -z "$JAMULUS_SERVERNAME" ] ; then
