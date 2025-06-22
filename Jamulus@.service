@@ -2,9 +2,6 @@
 Description=Jamulus Server %i
 Documentation=http://jamulus.drealm.info/jamulus
 Documentation=https://jamulus.io/wiki/Server-Troubleshooting
-#After=network.target
-#Before=network-online.target
-#Wants=network-online.target
 After=systemd-networkd-wait-online.service
 Wants=systemd-networkd-wait-online.service
 
