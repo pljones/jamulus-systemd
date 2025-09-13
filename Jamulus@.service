@@ -9,10 +9,14 @@ Wants=systemd-networkd-wait-online.service
 WantedBy=multi-user.target
 
 [Service]
+AmbientCapabilities=CAP_SYS_NICE
+CapabilityBoundingSet=CAP_SYS_NICE
+LimitRTPRIO=99
 CPUSchedulingPolicy=fifo
 CPUSchedulingPriority=20
 IOSchedulingClass=realtime
 IOSchedulingPriority=3
+MemorySwapMax=0
 SyslogIdentifier=Jamulus-%i
 User=Jamulus
 Group=Jamulus
