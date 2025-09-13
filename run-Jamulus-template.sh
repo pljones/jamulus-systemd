@@ -54,6 +54,13 @@ fi
 if [ ! -z "$JAMULUS_SERVERINFO" ] ; then JAMULUS_OPTS+=("-o" "$JAMULUS_SERVERINFO"); fi
 if [ ! -z "$JAMULUS_WELCOMEMSG" ] ; then JAMULUS_OPTS+=("-w" "$JAMULUS_WELCOMEMSG"); fi
 
+if [ ! -z "$JAMULUS_JSONRPCSECRET" ] && [ -f "$JAMULUS_JSONRPCSECRET" ] ; then JAMULUS_OPTS+=("--jsonrpcsecretfile" "$JAMULUS_JSONRPCSECRET"); fi
+if [ ! -z "$JAMULUS_JSONRPCPORT" ] && [ -z "$JAMULUS_JSONRPCSECRET" ]; then
+	echo "if JSONRPCPORT set, JSONRPCSECRET must be set" >&2
+	exit 1
+fi
+if [ ! -z "$JAMULUS_JSONRPCPORT" ] ; then JAMULUS_OPTS+=("--jsonrpcport" "$JAMULUS_JSONRPCPORT"); fi
+
 echo "Starting Jamulus server" ;#"$JAMULUS_SERVERNAME"
 if [ ! -z "$JAMULUS_STATUSPAGE" -a -e "$JAMULUS_STATUSPAGE" ] ; then
 	cat > "$JAMULUS_STATUSPAGE" << !EOF
