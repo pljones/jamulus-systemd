@@ -13,6 +13,7 @@ if [ ! -z "$JAMULUS_MULTITHREADED" ] && $JAMULUS_MULTITHREADED; then JAMULUS_OPT
 if [ ! -z "$JAMULUS_FASTUPDATE" ] && $JAMULUS_FASTUPDATE; then JAMULUS_OPTS+=("-F"); fi
 if [ ! -z "$JAMULUS_DELAYPAN" ] && $JAMULUS_DELAYPAN; then JAMULUS_OPTS+=("-P"); fi
 if [ ! -z "$JAMULUS_IPV6" ] && $JAMULUS_IPV6; then JAMULUS_OPTS+=("-6"); fi
+if [ ! -z "$JAMULUS_NOIPV6" ] && $JAMULUS_NOIPV6; then JAMULUS_OPTS+=("--noipv6"); fi
 if [ ! -z "$JAMULUS_MAXCHANS" ] ; then JAMULUS_OPTS+=("-u" $JAMULUS_MAXCHANS); fi
 if [ ! -z "$JAMULUS_QOS" ] ; then JAMULUS_OPTS+=("-Q" $JAMULUS_QOS); fi
 
