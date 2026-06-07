@@ -41,12 +41,6 @@ then
 	if [ ! -z "$JAMULUS_ACCEPT_LICENCE" ] && $JAMULUS_ACCEPT_LICENCE ; then JAMULUS_OPTS+=("-L"); fi
 fi
 
-if [ ! -z "$JAMULUS_STATUSPAGE" -a -z "$JAMULUS_SERVERNAME" ] ; then
-	echo "if STATUSPAGE set, SERVERNAME must be set" >&2
-	exit 1
-fi
-if [ ! -z "$JAMULUS_STATUSPAGE" ] ; then JAMULUS_OPTS+=("-m" "$JAMULUS_STATUSPAGE"); fi
-
 if [ ! -z "$JAMULUS_SERVERINFO" -a -z "$JAMULUS_DIRECTORY" ] ; then
 	echo "if SERVERINFO set, DIRECTORY must be set" >&2
 	exit 1
@@ -60,13 +54,6 @@ if [ ! -z "$JAMULUS_JSONRPCPORT" ] && [ -z "$JAMULUS_JSONRPCSECRET" ]; then
 	exit 1
 fi
 if [ ! -z "$JAMULUS_JSONRPCPORT" ] ; then JAMULUS_OPTS+=("--jsonrpcport" "$JAMULUS_JSONRPCPORT"); fi
-
-echo "Starting Jamulus server" ;#"$JAMULUS_SERVERNAME"
-if [ ! -z "$JAMULUS_STATUSPAGE" -a -e "$JAMULUS_STATUSPAGE" ] ; then
-	cat > "$JAMULUS_STATUSPAGE" << !EOF
-$JAMULUS_SERVERNAME Jamulus server is starting.
-!EOF
-fi
 
 echo exec ${DAEMON} "${JAMULUS_OPTS[@]}"
 exec ${DAEMON} "${JAMULUS_OPTS[@]}"
